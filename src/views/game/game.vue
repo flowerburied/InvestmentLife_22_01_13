@@ -24,7 +24,7 @@
         :style="{
           top: item.top + 'px',
           left: item.left + 'px',
-          transitionDuration: '1S',
+          transitionDuration: +'S',
         }"
         :ref="'coordinate' + index"
       >
@@ -67,7 +67,7 @@
       <div class="canvas_box_blue_sec" ref="testdivsec" @click="testfun"></div>
       <div class="canvas_box_yellow_fourth"></div> -->
     </div>
-    <div class="game_btn" ref="gameBtn" @click="testSrray"></div>
+    <div class="game_btn" ref="gameBtn" @click="luckDraw"></div>
   </div>
 </template>
 
@@ -177,6 +177,12 @@ export default {
       ],
       gameBtn: null,
       clickView: [],
+      presentCoor: {
+        index: 2,
+        ingroup: 7,
+      },
+      transitionDuration: 1,
+      surplus: 0,
     });
     const router = useRouter();
     const toabout = () => {
@@ -235,7 +241,7 @@ export default {
       // let getref = proxy.$refs.coordinate10;
 
       let getref = eval("proxy.$refs.coordinate" + numtest);
-      console.log("getref", getref);
+      // console.log("getref", getref);
       const { offsetTop, offsetLeft, offsetParent } = getref;
       // console.log("offsetParent", offsetParent);
       let thirdView = offsetParent.offsetParent;
@@ -254,7 +260,7 @@ export default {
         offsetLeft: offsetLeft + offsetParent.offsetLeft + thirdView.offsetLeft,
       };
 
-      console.log("secdiv", secdiv);
+      // console.log("secdiv", secdiv);
       fromConfig.secdiv = secdiv;
       await testSrraySec();
     };
@@ -278,7 +284,7 @@ export default {
         offsetLeft: fromConfig.firstdiv.offsetLeft - fromConfig.secdiv.offsetLeft,
       };
 
-      console.log("option", option);
+      // console.log("option", option);
 
       for (let i = 0; i < fromConfig.coordinateGroup.length; i++) {
         fromConfig.coordinateGroup[i].top =
@@ -289,14 +295,17 @@ export default {
     };
 
     const testSrrayAdd = () => {
-      // let option = {
-      //   top: 0,
-      //   left: 0,
-      //   group: fromConfig.coordinate,
-      // };
+      let option = {
+        top: 0,
+        left: 0,
+        group: fromConfig.coordinate,
+      };
       // fromConfig.coordinateGroup.push(option);
       let initialPoint = fromConfig.coordinateGroup;
-      console.log("initialPoint", initialPoint);
+      // console.log("initialPoint", initialPoint);
+      initialPoint.splice(2, 1);
+      initialPoint.unshift(option);
+      fromConfig.coordinateGroup = initialPoint;
     };
     const showref = (index, ingroup) => {
       console.log("index,ingroup", index, ingroup);
@@ -319,6 +328,111 @@ export default {
     //   console.log(" fromConfig.clickView", fromConfig.clickView);
     // });
 
+    const resetFun = () => {
+      for (let i = 0; i < fromConfig.coordinateGroup.length; i++) {
+        if (i == 0) {
+          fromConfig.coordinateGroup[i].top = 0;
+          fromConfig.coordinateGroup[i].left = 0;
+        } else if (i == 1) {
+          fromConfig.coordinateGroup[i].top = 160;
+          fromConfig.coordinateGroup[i].left = 0;
+        } else if (i == 2) {
+          fromConfig.coordinateGroup[i].top = 320;
+          fromConfig.coordinateGroup[i].left = 0;
+        }
+      }
+
+      setTimeout(() => {
+        // fromConfig.surplus
+        luckDraw();
+      }, 1000);
+    };
+
+    const luckDraw = () => {
+      let luckDrawNum = 6;
+
+      // let animateArray = [
+      //   { refnum: 24, transitionDuration: 3 },
+      //   { refnum: 20, transitionDuration: 4 },
+      //   { refnum: 14, transitionDuration: 4 },
+      // ];
+      // let calculationCoor = {
+      //   index: 0,
+      //   ingroup: 2,
+      // };
+
+      let presentCoor = fromConfig.presentCoor;
+      // let presentCoor = calculationCoor;
+      let getarray = [];
+      var surplus = 0;
+      for (let i = 0; i < luckDrawNum; i++) {
+        // console.log("1-1", 0 - 1);
+        let getoption = null;
+        if (presentCoor.ingroup == 0 && presentCoor.index == 0) {
+          console.log("结束循环", i);
+          // continue;
+          surplus++;
+        } else {
+          if (presentCoor.ingroup - 1 > -1) {
+            getoption = {
+              index: presentCoor.index,
+              ingroup: presentCoor.ingroup - 1,
+              refnum: presentCoor.index + "" + (presentCoor.ingroup - 1),
+              transitionDuration: 1,
+            };
+            presentCoor.ingroup = presentCoor.ingroup - 1;
+          } else {
+            getoption = {
+              index: presentCoor.index - 1,
+              ingroup: 7,
+              refnum: presentCoor.index - 1 + "" + 7,
+              transitionDuration: 1,
+            };
+            presentCoor.index = presentCoor.index - 1;
+            presentCoor.ingroup = 7;
+          }
+          getarray.push(getoption);
+        }
+      }
+
+      // console.log("getarray", getarray);
+      console.log("surplus", surplus);
+      // let gopresentCoor = null;
+      fromConfig.surplus = surplus;
+      if (getarray.length > 0) {
+        // console.log("getarray", getarray[getarray.length - 1]);
+        // for(let i=0; i<animateArray.length;i++){
+        //    testSrray(animateArray[i.refnum]);
+        // }
+        let getarrayObj = getarray[getarray.length - 1];
+        let newpresentCoor = {
+          index: getarrayObj.index,
+          ingroup: getarrayObj.ingroup,
+        };
+        fromConfig.presentCoor = newpresentCoor;
+        recursion(getarray);
+      }
+    };
+    const recursion = (animateArray) => {
+      if (animateArray.length != 0) {
+        fromConfig.transitionDuration = animateArray[0].transitionDuration;
+        testSrray(animateArray[0].refnum);
+        animateArray.splice(0, 1);
+        setTimeout(() => {
+          recursion(animateArray);
+        }, 1000);
+      } else {
+        if (fromConfig.surplus) {
+          let newpresentCoor = {
+            index: 2,
+            ingroup: 7,
+          };
+          fromConfig.presentCoor = newpresentCoor;
+          resetFun();
+        }
+      }
+    };
+
     return {
       ...toRefs(fromConfig),
       toabout,
@@ -328,6 +442,7 @@ export default {
       testSrray,
       testSrrayAdd,
       showref,
+      luckDraw,
       // coordinate,
     };
   },
