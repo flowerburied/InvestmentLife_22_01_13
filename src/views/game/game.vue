@@ -9,7 +9,7 @@
     <div
       class="game_boxs"
       ref="testdiv"
-      @click="animateFun"
+      @click="testSrrayAdd"
       :style="{
         top: animate.top + 'px',
         left: animate.left + 'px',
@@ -17,21 +17,69 @@
       }"
     ></div>
     <div class="canvas_box">
-      <div class="canvas_box_red"></div>
+      <div
+        class="canvas_box_fortestbao"
+        v-for="(item, index) in coordinateGroup"
+        :key="index"
+        :style="{
+          top: item.top + 'px',
+          left: item.left + 'px',
+          transitionDuration: '1S',
+        }"
+        :ref="'coordinate' + index"
+      >
+        <!-- :ref="'coordinate' + index" -->
+        <div
+          @click="showref(index, ingroup)"
+          v-for="(itgroup, ingroup) in item.group"
+          :key="ingroup"
+          class="canvas_box_fortest"
+          :style="{
+            top: itgroup.top + 'px',
+            left: itgroup.left + 'px',
+            transitionDuration: '1S',
+            background: itgroup.bg,
+          }"
+          :ref="'coordinate' + index + ingroup"
+        >
+          {{ index }}
+        </div>
+      </div>
+
+      <!-- <div
+        class="canvas_box_fortest"
+        :style="{
+          top: item.top + 'px',
+          left: item.left + 'px',
+          transitionDuration: '1S',
+          background: item.bg,
+        }"
+        v-for="(item, index) in coordinate"
+        :key="index"
+      ></div> -->
+
+      <!-- <div class="canvas_box_red"></div>
       <div class="canvas_box_yellow"></div>
       <div class="canvas_box_blue"></div>
       <div class="canvas_box_yellow_sec"></div>
       <div class="canvas_box_red_sec"></div>
       <div class="canvas_box_yellow_third"></div>
       <div class="canvas_box_blue_sec" ref="testdivsec" @click="testfun"></div>
-      <div class="canvas_box_yellow_fourth"></div>
+      <div class="canvas_box_yellow_fourth"></div> -->
     </div>
-    <div class="game_btn" @click="animatebox"></div>
+    <div class="game_btn" ref="gameBtn" @click="testSrray"></div>
   </div>
 </template>
 
 <script>
-import { reactive, toRefs, onMounted, nextTick } from "vue";
+import {
+  reactive,
+  toRefs,
+  onMounted,
+  nextTick,
+  onUpdated,
+  getCurrentInstance,
+} from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { qrcanvas } from "qrcanvas";
@@ -41,6 +89,7 @@ export default {
     console.log("test", this.$store.state.test);
   },
   setup() {
+    const { proxy } = getCurrentInstance(); //this
     let store = useStore();
     onMounted(() => {
       // console.log("fromConfig", store.state.test);
@@ -68,6 +117,66 @@ export default {
         top: 0,
         left: 0,
       },
+      // db1919  红
+      // f7d775 黄
+      // 0000ff 蓝
+      // f7d775 黄
+      coordinate: [
+        { bg: "#db1919", top: 0, left: 0 },
+        { bg: "#f7d775", top: 20, left: 40 },
+        { bg: "#0000ff", top: 40, left: 80 },
+        { bg: "#f7d775", top: 60, left: 120 },
+        { bg: "#db1919", top: 80, left: 160 },
+        { bg: "#f7d775", top: 100, left: 120 },
+        { bg: "#0000ff", top: 120, left: 80 },
+        { bg: "#f7d775", top: 140, left: 40 },
+      ],
+      coordinateGroup: [
+        {
+          top: 0,
+          left: 0,
+          group: [
+            { bg: "#db1919", top: 0, left: 0 },
+            { bg: "#f7d775", top: 20, left: 40 },
+            { bg: "#0000ff", top: 40, left: 80 },
+            { bg: "#f7d775", top: 60, left: 120 },
+            { bg: "#db1919", top: 80, left: 160 },
+            { bg: "#f7d775", top: 100, left: 120 },
+            { bg: "#0000ff", top: 120, left: 80 },
+            { bg: "#f7d775", top: 140, left: 40 },
+          ],
+        },
+        {
+          top: 160,
+          left: 0,
+          group: [
+            { bg: "#db1919", top: 0, left: 0 },
+            { bg: "#f7d775", top: 20, left: 40 },
+            { bg: "#0000ff", top: 40, left: 80 },
+            { bg: "#f7d775", top: 60, left: 120 },
+            { bg: "#db1919", top: 80, left: 160 },
+            { bg: "#f7d775", top: 100, left: 120 },
+            { bg: "#0000ff", top: 120, left: 80 },
+            { bg: "#f7d775", top: 140, left: 40 },
+          ],
+        },
+        {
+          top: 320,
+          left: 0,
+          group: [
+            { bg: "#db1919", top: 0, left: 0 },
+            { bg: "#f7d775", top: 20, left: 40 },
+            { bg: "#0000ff", top: 40, left: 80 },
+            { bg: "#f7d775", top: 60, left: 120 },
+            { bg: "#db1919", top: 80, left: 160 },
+            { bg: "#f7d775", top: 100, left: 120 },
+            { bg: "#0000ff", top: 120, left: 80 },
+            { bg: "#f7d775", top: 140, left: 40 },
+          ],
+        },
+      ],
+      gameBtn: null,
+      clickView: [],
     });
     const router = useRouter();
     const toabout = () => {
@@ -116,7 +225,111 @@ export default {
       console.log("Difference", Difference);
     };
 
-    return { ...toRefs(fromConfig), toabout, animateFun, testfun, animatebox };
+    const testSrray = async (numtest) => {
+      // fromConfig.coordinateGroup.splice(2, 1);
+      // setTimeout(() => {
+      //   testSrrayAdd();
+      // }, 2000);
+      // console.log("proxy", proxy.$refs);
+
+      // let getref = proxy.$refs.coordinate10;
+
+      let getref = eval("proxy.$refs.coordinate" + numtest);
+      console.log("getref", getref);
+      const { offsetTop, offsetLeft, offsetParent } = getref;
+      // console.log("offsetParent", offsetParent);
+      let thirdView = offsetParent.offsetParent;
+      // console.log("thirdView", thirdView.offsetTop);
+      // let secdiv = {
+      //   offsetTop: offsetTop,
+      //   offsetLeft: offsetLeft,
+      //   offsetParentTop: offsetParent.offsetTop,
+      //   offsetParentLeft: offsetParent.offsetLeft,
+      //   thirdViewTop: thirdView.offsetTop,
+      //   thirdViewLeft: thirdView.offsetLeft,
+      // };
+
+      let secdiv = {
+        offsetTop: offsetTop + offsetParent.offsetTop + thirdView.offsetTop,
+        offsetLeft: offsetLeft + offsetParent.offsetLeft + thirdView.offsetLeft,
+      };
+
+      console.log("secdiv", secdiv);
+      fromConfig.secdiv = secdiv;
+      await testSrraySec();
+    };
+
+    const testSrraySec = async () => {
+      let getref = fromConfig.gameBtn;
+      const { offsetTop, offsetLeft } = getref;
+
+      let firstdiv = {
+        offsetTop: offsetTop,
+        offsetLeft: offsetLeft,
+      };
+      fromConfig.firstdiv = firstdiv;
+      await moveView();
+    };
+
+    const moveView = () => {
+      // let getsectop=
+      let option = {
+        offsetTop: fromConfig.firstdiv.offsetTop - fromConfig.secdiv.offsetTop,
+        offsetLeft: fromConfig.firstdiv.offsetLeft - fromConfig.secdiv.offsetLeft,
+      };
+
+      console.log("option", option);
+
+      for (let i = 0; i < fromConfig.coordinateGroup.length; i++) {
+        fromConfig.coordinateGroup[i].top =
+          fromConfig.coordinateGroup[i].top + option.offsetTop;
+        fromConfig.coordinateGroup[i].left =
+          fromConfig.coordinateGroup[i].left + option.offsetLeft;
+      }
+    };
+
+    const testSrrayAdd = () => {
+      // let option = {
+      //   top: 0,
+      //   left: 0,
+      //   group: fromConfig.coordinate,
+      // };
+      // fromConfig.coordinateGroup.push(option);
+      let initialPoint = fromConfig.coordinateGroup;
+      console.log("initialPoint", initialPoint);
+    };
+    const showref = (index, ingroup) => {
+      console.log("index,ingroup", index, ingroup);
+      // let videoPlayer = eval("this.$refs.micSvgaAnim" + i)[0];
+      let numt = index + "" + ingroup + "";
+      console.log("numt", numt);
+      testSrray(numt);
+    };
+
+    // const coordinate = (el) => {
+    //   // console.log("el", el);
+    //   // let getView = [];
+    //   fromConfig.clickView.push(el);
+    //   // fromConfig.clickView = getView;
+
+    //   // console.log("fromConfig.clickView ", fromConfig.clickView);
+    // };
+
+    // onUpdated(() => {
+    //   console.log(" fromConfig.clickView", fromConfig.clickView);
+    // });
+
+    return {
+      ...toRefs(fromConfig),
+      toabout,
+      animateFun,
+      testfun,
+      animatebox,
+      testSrray,
+      testSrrayAdd,
+      showref,
+      // coordinate,
+    };
   },
 };
 </script>
@@ -131,31 +344,56 @@ export default {
 
   .game_btn {
     position: relative;
-    top: 170px;
+    top: 570px;
     left: 0;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 40px;
     background: red;
   }
   .game_boxs {
     position: relative;
-    top: 81px;
+    // top: 20px;
     left: 0;
     width: 100px;
     height: 100px;
-    background: red;
+    background: #db1919;
     transition-property: all; //过度动画
     transition-duration: 1s;
   }
   .canvas_box {
     position: relative;
-    top: 183px;
-    width: 238px;
-    height: 340px;
-    // background: gold;
+    // top: 50px;
+    width: 240px;
+    // height: 340px;
+    background: rgb(192, 198, 255);
 
+    .canvas_box_fortestbao {
+      position: absolute;
 
-    
+      top: 0;
+      left: 0;
+
+      width: 240px;
+      height: 180px;
+
+      // background: #68ff75;
+      transition-property: all; //过度动画
+      transition-duration: 1s;
+      .canvas_box_fortest {
+        position: absolute;
+
+        top: 20px;
+        left: 40px;
+
+        width: 80px;
+        height: 40px;
+        background: #f7d775;
+
+        transition-property: all; //过度动画
+        transition-duration: 1s;
+      }
+    }
+
     .canvas_box_red {
       position: absolute;
       top: 0;
@@ -182,7 +420,7 @@ export default {
 
       width: 80px;
       height: 40px;
-      background: blue;
+      background: #0000ff;
     }
     .canvas_box_yellow_sec {
       position: absolute;
