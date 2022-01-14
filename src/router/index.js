@@ -9,7 +9,12 @@ const routes = [
         component: () =>
             import ("@/views/game/game.vue"),
     },
-
+    {
+        path: "/gameView",
+        name: "gameView",
+        component: () =>
+            import ("@/views/game/gameView.vue"),
+    },
     {
         path: "/qrcode",
         name: "qrcode",
