@@ -2,25 +2,27 @@
   <div class="index_first">
     <div class="index_first_info">
       <div class="first_info_box">
-        <img class="info_box_img" src="@/assets/game/01.png" />
-        <div class="info_box_name">用户昵称</div>
+        <img class="info_box_img" src="@/assets/game/14.png" />
+        <div class="info_box_name">投资人</div>
       </div>
-      <div class="first_info_info">年龄 27</div>
+      <div class="first_info_info">年龄 {{ $store.state.userinfo.age }}</div>
     </div>
     <div class="index_first_money">
       <div class="first_money_first">
         <img class="money_first_img" src="@/assets/game/01.png" />
         <div class="money_first_box">
           <div class="first_box_text">现金</div>
-          <div class="first_box_money">￥99,999</div>
+          <div class="first_box_money">￥{{ $store.state.userinfo.money }}</div>
         </div>
       </div>
 
       <div class="first_money_first">
         <img class="money_first_img" src="@/assets/game/01.png" />
         <div class="money_first_box">
-          <div class="first_box_text">现金</div>
-          <div class="first_box_money">￥365/月</div>
+          <div class="first_box_text">现金流</div>
+          <div class="first_box_money">
+            ￥{{ $store.state.userinfo.wages + $store.state.userinfo.wages }}万/月
+          </div>
         </div>
       </div>
 
@@ -28,13 +30,13 @@
         <div class="money_second_box">
           <div class="second_box_text">工资</div>
           <div class="second_box_money">
-            9,999 <span class="box_money_time">/月</span>
+            {{ $store.state.userinfo.wages }}<span class="box_money_time">/月</span>
           </div>
         </div>
         <div class="money_second_box">
-          <div class="second_box_text">工资</div>
+          <div class="second_box_text">投资</div>
           <div class="second_box_money">
-            9,999 <span class="box_money_time">/月</span>
+            {{ $store.state.userinfo.income }}万<span class="box_money_time">/月</span>
           </div>
         </div>
       </div>
@@ -43,14 +45,12 @@
 </template>
 
 <script>
-export default {
-    
-};
+export default {};
 </script>
 
 <style lang="scss">
 .index_first {
-    z-index: 1005;
+  z-index: 1005;
   position: fixed;
   top: 0;
   width: 100%;

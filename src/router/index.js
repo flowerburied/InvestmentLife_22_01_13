@@ -16,6 +16,18 @@ const routes = [
             import ("@/views/game/gameView.vue"),
     },
     {
+        path: "/openView",
+        name: "openView",
+        component: () =>
+            import ("@/views/game/openView.vue"),
+    },
+    {
+        path: "/signup",
+        name: "signup",
+        component: () =>
+            import ("@/views/game/signup.vue"),
+    },
+    {
         path: "/qrcode",
         name: "qrcode",
         component: () =>
