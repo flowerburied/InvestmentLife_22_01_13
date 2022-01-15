@@ -40,7 +40,7 @@
 
     <div class="signup_btnxx" @click="clickSignUp">
       <img class="signup_btn_img" src="@/assets/game/09.png" />
-      <div class="signup_btn_text" >登录</div>
+      <div class="signup_btn_text">登录</div>
     </div>
   </div>
 </template>
@@ -128,7 +128,12 @@ export default {
         console.log("res", res);
         const { code, data } = res;
         if (code == 0) {
-           data.income = parseFloat(data.income);
+          if (data.income) {
+            data.income = parseFloat(data.income);
+          } else {
+            data.income = 0;
+          }
+
           proxy.$store.commit("SET_USER_INFO", data);
           let testuse = JSON.stringify(data);
           // sessionStorage.setItem("userinfo", testuse);

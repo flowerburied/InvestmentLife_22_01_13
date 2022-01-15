@@ -27,7 +27,7 @@
   </div>
 
   <div class="game_character" ref="gameBtn">
-    <img class="game_character_img" src="@/assets/game/02.png" />
+    <img class="game_character_img" src="@/assets/game/26.png" />
   </div>
 </template>
 
@@ -246,13 +246,15 @@ export default {
 
   width: 72px;
   height: 46px;
-  background: red;
+  // background: red;
   display: flex;
   align-items: center;
   justify-content: center;
   .game_character_img {
-    width: 72px;
-    height: 46px;
+    position: absolute;
+    bottom: 10px;
+    width: 107px;
+    height: 107px;
   }
 }
 .index_game {

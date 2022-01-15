@@ -79,7 +79,7 @@
               A. {{ $store.state.maskList.content.data.a }}
             </div>
             <img
-              v-if="changeval == 'a'"
+              v-if="changevalnum == 'a'"
               class="answer_bao_img"
               src="@/assets/game/20.png"
             />
@@ -89,7 +89,7 @@
               B. {{ $store.state.maskList.content.data.b }}
             </div>
             <img
-              v-if="changeval == 'b'"
+              v-if="changevalnum == 'b'"
               class="answer_bao_img"
               src="@/assets/game/20.png"
             />
@@ -99,7 +99,7 @@
               C. {{ $store.state.maskList.content.data.c }}
             </div>
             <img
-              v-if="changeval == 'c'"
+              v-if="changevalnum == 'c'"
               class="answer_bao_img"
               src="@/assets/game/20.png"
             />
@@ -109,7 +109,7 @@
               D. {{ $store.state.maskList.content.data.d }}
             </div>
             <img
-              v-if="changeval == 'd'"
+              v-if="changevalnum == 'd'"
               class="answer_bao_img"
               src="@/assets/game/20.png"
             />
@@ -163,12 +163,12 @@ export default {
   setup() {
     const { proxy } = getCurrentInstance(); //this
     const fromConfig = reactive({
-      changeval: null,
+      changevalnum: null,
       changemask: null,
     });
     const changeval = (val) => {
       console.log("val", val);
-      fromConfig.changeval = val;
+      fromConfig.changevalnum = val;
     };
 
     const investment = async () => {
@@ -193,18 +193,19 @@ export default {
     };
 
     const clearMask = () => {
-      (fromConfig.changeval = null),
+      (fromConfig.changevalnum = null),
         (fromConfig.changemask = null),
         proxy.$emit("clearMaski");
+      proxy.$emit("getUserInfo");
     };
 
     const Submitval = async () => {
       try {
-        if (fromConfig.changeval) {
+        if (fromConfig.changevalnum) {
           let option = {
             index: proxy.$store.state.maskList.content.index,
             uid: proxy.$store.state.userinfo.id,
-            option: fromConfig.changeval,
+            option: fromConfig.changevalnum,
           };
           console.log("option", option);
           const res = await api.game.answer(option);
@@ -219,8 +220,6 @@ export default {
                 type: 0,
                 msg: msg,
               };
-
-              
             } else {
               changemaskxx = {
                 type: 1,

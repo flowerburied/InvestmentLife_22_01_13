@@ -1,5 +1,5 @@
 <template>
-  <div class="index_first">
+  <div class="index_first" v-if="$store.state.userinfo">
     <div class="index_first_info">
       <div class="first_info_box">
         <img class="info_box_img" src="@/assets/game/14.png" />
