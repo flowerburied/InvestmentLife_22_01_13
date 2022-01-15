@@ -114,15 +114,24 @@ export default {
       }
 
       console.log("surplus", surplus);
+      console.log("getarray", getarray);
       fromConfig.surplus = surplus;
       if (getarray.length > 0) {
         let getarrayObj = getarray[getarray.length - 1];
+        console.log("getarrayObj", getarrayObj);
         let newpresentCoor = {
           index: getarrayObj.index,
           ingroup: getarrayObj.ingroup,
         };
         fromConfig.presentCoor = newpresentCoor;
         recursion(getarray);
+      } else {
+        let newpresentCoor = {
+          index: 1,
+          ingroup: 7,
+        };
+        fromConfig.presentCoor = newpresentCoor;
+        resetFun();
       }
     };
     const recursion = (animateArray) => {
@@ -159,12 +168,30 @@ export default {
         }
       }
 
-      if (fromConfig.surplus != 1) {
-        setTimeout(() => {
-          // fromConfig.surplus
-          luckDraw(fromConfig.surplus);
-        }, 1000);
-      }
+      // if (fromConfig.surplus != 1) {
+      // 轮回
+      setTimeout(() => {
+        // fromConfig.surplus
+        let onsurplus = fromConfig.surplus - 1;
+        console.log("onsurplus", onsurplus);
+
+        if (onsurplus > 0) {
+          luckDraw(onsurplus);
+        } else {
+          // 结束
+          proxy.$emit("walkCallback");
+        }
+        // if (onsurplus != 1 || onsurplus != 0) {
+        //   luckDraw(onsurplus);
+        // } else if (onsurplus == -1) {
+        //   // 结束
+        //   proxy.$emit("walkCallback");
+        // } else {
+        //   // 结束
+        //   proxy.$emit("walkCallback");
+        // }
+      }, 1000);
+      // }
     };
     const testSrray = async (numtest) => {
       let getref = eval("proxy.$refs.coordinate" + numtest);

@@ -1,7 +1,15 @@
 <template>
   <div class="game_index">
+    <img class="game_index_bgimgx" src="@/assets/game/15.png" />
     <firstview></firstview>
     <gameComp ref="gameComp" @walkCallback="walkCallback"></gameComp>
+    <!-- v-if="isshowMask" -->
+    <gameMask
+      v-if="isshowMask"
+      @getUserInfo="getUserInfo"
+      @clearMaski="clearMaski"
+    ></gameMask>
+
     <div class="index_bottom">
       <img
         v-if="isShowGif"
@@ -9,7 +17,11 @@
         class="index_bottom_img"
         src="@/assets/game/06.png"
       />
-      <img v-if="!isShowGif" class="index_bottom_img" :src="numUrl" />
+      <img
+        v-if="!isShowGif"
+        class="index_bottom_img"
+        :src="`${numUrl}?${new Date().getTime()}`"
+      />
     </div>
   </div>
 </template>
@@ -22,6 +34,7 @@ import { qrcanvas } from "qrcanvas";
 import api from "@/api/api";
 import firstview from "@/components/userInfoView";
 import gameComp from "@/components/gameComp";
+import gameMask from "@/components/gameMask";
 export default {
   name: "About",
   mounted() {
@@ -30,6 +43,7 @@ export default {
   components: {
     firstview,
     gameComp,
+    gameMask,
   },
   setup() {
     // let store = useStore();
@@ -39,6 +53,8 @@ export default {
     const fromConfig = reactive({
       isShowGif: true,
       numUrl: require("@/assets/game/dice/shaking1.gif"),
+
+      isshowMask: false,
     });
 
     // const router = useRouter();
@@ -47,8 +63,13 @@ export default {
     // };
     const walkCallback = () => {
       console.log("walkCallback");
-      fromConfig.numUrl = require("@/assets/game/06.png");
+      // fromConfig.numUrl = require("@/assets/game/06.png");
       fromConfig.isShowGif = true;
+      fromConfig.isshowMask = true;
+      getUserInfo();
+    };
+    const clearMaski = () => {
+      fromConfig.isshowMask = false;
     };
 
     const drawNum = async () => {
@@ -56,6 +77,7 @@ export default {
       //   luckDraw(num);
       // proxy.$refs.gameComp.luckDraw(num);
       try {
+        proxy.$store.commit("SET_MASK_LIST", null);
         let option = {
           uid: proxy.$store.state.userinfo.id,
         };
@@ -66,8 +88,33 @@ export default {
         const { code, data } = res;
         if (code == 0) {
           fromConfig.isShowGif = false;
-          fromConfig.numUrl = require(`@/assets/game/dice/shaking${data.Dice}.gif`);
+          fromConfig.numUrl = data.Url;
+
+          // require(`@/assets/game/dice/shaking${data.Dice}.gif`);
           console.log("data", data);
+          // console.log("data.investment.length", data.investment.length);
+          // console.log("data.subject.length", data.subject.length);
+          if (data.investment.length == 0 && data.subject.length == 0) {
+            console.log("结算");
+            settlement(data.Event);
+          } else {
+            // console.log("不结算，弹框",data.investment.data[0]);
+            let val = null;
+            if (data.investment.length != 0) {
+              val = {
+                type: 0,
+                content: data.investment,
+                title: data.investment.data[0],
+              };
+            } else if (data.subject.length != 0) {
+              val = {
+                type: 1,
+                content: data.subject,
+              };
+            }
+
+            proxy.$store.commit("SET_MASK_LIST", val);
+          }
 
           setTimeout(() => {
             proxy.$refs.gameComp.luckDraw(data.Dice);
@@ -78,7 +125,53 @@ export default {
       }
     };
 
-    return { ...toRefs(fromConfig), drawNum, walkCallback };
+    const settlement = async (Event) => {
+      try {
+        let option = {
+          Event: Event,
+          uid: proxy.$store.state.userinfo.id,
+        };
+        console.log("option", option);
+        const res = await api.game.settlement(option);
+
+        const { code, msg } = res;
+        if (code == 0) {
+          // proxy.$store.commit("SET_MASK_LIST", null);
+          let val = {
+            type: 2,
+            title: msg,
+          };
+          proxy.$store.commit("SET_MASK_LIST", val);
+        }
+      } catch (err) {
+        console.log("err", err);
+      }
+    };
+
+    const getUserInfo = async () => {
+      try {
+        let option = {
+          uid: proxy.$store.state.userinfo.id,
+        };
+        console.log("option", option);
+        const res = await api.game.getUserInfo(option);
+        console.log("res", res);
+        const { code, data } = res;
+        if (code == 0) {
+          if (data.income) {
+            data.income = parseFloat(data.income);
+          } else {
+            data.income = 0;
+          }
+
+          proxy.$store.commit("SET_USER_INFO", data);
+        }
+      } catch (err) {
+        console.log("err", err);
+      }
+    };
+
+    return { ...toRefs(fromConfig), drawNum, walkCallback, clearMaski, getUserInfo };
   },
 };
 </script>
@@ -90,8 +183,14 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-
+  .game_index_bgimgx {
+    z-index: -1;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+  }
   .index_bottom {
+    z-index: 999;
     position: fixed;
     bottom: 0;
     width: 100%;

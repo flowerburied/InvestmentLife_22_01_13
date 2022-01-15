@@ -9,23 +9,24 @@
     </div>
     <div class="index_first_money">
       <div class="first_money_first">
-        <img class="money_first_img" src="@/assets/game/01.png" />
+        <img class="money_first_img" src="@/assets/game/04.png" />
         <div class="money_first_box">
           <div class="first_box_text">现金</div>
-          <div class="first_box_money">￥{{ $store.state.userinfo.money }}</div>
+          <div class="first_box_money">￥{{ $store.state.userinfo.money }}万</div>
         </div>
       </div>
 
       <div class="first_money_first">
-        <img class="money_first_img" src="@/assets/game/01.png" />
+        <img class="money_first_img" src="@/assets/game/05.png" />
         <div class="money_first_box">
           <div class="first_box_text">现金流</div>
           <div class="first_box_money">
-            ￥{{ $store.state.userinfo.wages + $store.state.userinfo.wages }}万/月
+            ￥{{
+              $store.state.userinfo.income + $store.state.userinfo.wages / 10000
+            }}万/月
           </div>
         </div>
       </div>
-
       <div class="first_money_second">
         <div class="money_second_box">
           <div class="second_box_text">工资</div>
@@ -36,7 +37,9 @@
         <div class="money_second_box">
           <div class="second_box_text">投资</div>
           <div class="second_box_money">
-            {{ $store.state.userinfo.income }}万<span class="box_money_time">/月</span>
+            {{ $store.state.userinfo.income || 0 }}万<span class="box_money_time"
+              >/月</span
+            >
           </div>
         </div>
       </div>
@@ -50,7 +53,7 @@ export default {};
 
 <style lang="scss">
 .index_first {
-  z-index: 1005;
+  z-index: 1001;
   position: fixed;
   top: 0;
   width: 100%;

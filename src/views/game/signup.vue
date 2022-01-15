@@ -128,6 +128,7 @@ export default {
         console.log("res", res);
         const { code, data } = res;
         if (code == 0) {
+           data.income = parseFloat(data.income);
           proxy.$store.commit("SET_USER_INFO", data);
           let testuse = JSON.stringify(data);
           // sessionStorage.setItem("userinfo", testuse);

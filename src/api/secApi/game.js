@@ -41,6 +41,14 @@ let game = {
             data: data
         })
     },
+    // 用户信息
+    getUserInfo(data) {
+        return axios({
+            url: '/getUserInfo',
+            method: 'post',
+            data: data
+        })
+    },
 }
 
 export default game

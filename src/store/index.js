@@ -3,9 +3,13 @@ import { createStore } from "vuex";
 export default createStore({
     state: {
         test: "6666",
-        userinfo: null
+        userinfo: null,
+        maskList: null
     },
     mutations: {
+        SET_MASK_LIST(state, step) {
+            state.maskList = step
+        },
         SET_USER_INFO(state, step) {
             state.userinfo = step
         },
