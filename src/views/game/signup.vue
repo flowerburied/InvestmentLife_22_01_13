@@ -129,8 +129,12 @@ export default {
         const { code, data } = res;
         if (code == 0) {
           if (data.income) {
-            data.income = parseFloat(data.income);
+            let merge = parseFloat(data.income);
+            data.income = merge;
+
+            data.merge = merge + data.income;
           } else {
+            data.merge = 0;
             data.income = 0;
           }
 

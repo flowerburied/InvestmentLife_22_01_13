@@ -22,7 +22,7 @@
           <div class="first_box_text">现金流</div>
           <div class="first_box_money">
             ￥{{
-              $store.state.userinfo.income + $store.state.userinfo.wages / 10000
+              $store.state.userinfo.merge
             }}万/月
           </div>
         </div>

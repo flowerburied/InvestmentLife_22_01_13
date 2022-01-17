@@ -6,6 +6,16 @@
       <div class="mask_management_box">
         <img class="management_box_img" src="@/assets/game/25.png" />
         <div class="management_box_title">{{ $store.state.maskList.title }}</div>
+
+        <div v-if="$store.state.maskList.data">
+          <div
+            class="management_box_add"
+            v-for="(it, index) in $store.state.maskList.data"
+            :key="index"
+          >
+            {{ it.content[0] }}
+          </div>
+        </div>
       </div>
 
       <div class="sec_answer_btn">
@@ -486,6 +496,17 @@ export default {
         font-weight: 400;
         color: #463210;
       }
+      .management_box_add {
+        margin-top: 15px;
+        position: relative;
+        width: 209px;
+        font-size: 17px;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: #463210;
+        line-height: 18px;
+      }
+
       .management_box_con {
         // position: absolute;
         position: relative;

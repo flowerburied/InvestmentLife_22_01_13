@@ -137,10 +137,23 @@ export default {
         const { code, msg } = res;
         if (code == 0) {
           // proxy.$store.commit("SET_MASK_LIST", null);
-          let val = {
-            type: 2,
-            title: msg,
-          };
+          let val = null;
+          if (res.data) {
+            for (let i = 0; i < res.data.length; i++) {
+              res.data[i].content = JSON.parse(res.data[i].content);
+            }
+            val = {
+              type: 2,
+              title: msg,
+              data: res.data,
+            };
+          } else {
+            val = {
+              type: 2,
+              title: msg,
+            };
+          }
+          console.log("val", val);
           proxy.$store.commit("SET_MASK_LIST", val);
         }
       } catch (err) {
@@ -158,12 +171,18 @@ export default {
         console.log("res", res);
         const { code, data } = res;
         if (code == 0) {
+
+          
           if (data.income) {
-            data.income = parseFloat(data.income);
+            let merge = parseFloat(data.income);
+            data.income = merge;
+
+            data.merge = merge + data.income;
           } else {
+            data.merge = 0;
             data.income = 0;
           }
-
+          console.log("data", data);
           proxy.$store.commit("SET_USER_INFO", data);
         }
       } catch (err) {
