@@ -80,13 +80,15 @@ export default {
         console.log("TencentSendSms", res);
         const { code, data } = res;
         if (code == 0) {
-          fromConfig.numtime = 60;
-          fromConfig.codetimeout = false;
-          setTimeout(() => {
-            fromConfig.codetimeout = true;
-          }, 3000);
-          getTime();
-          console.log("data", data);
+    
+            fromConfig.numtime = 60;
+            fromConfig.codetimeout = false;
+            setTimeout(() => {
+              fromConfig.codetimeout = true;
+            }, 3000);
+            getTime();
+            console.log("data", data);
+          
         }
       } catch (err) {
         console.log("err", err);

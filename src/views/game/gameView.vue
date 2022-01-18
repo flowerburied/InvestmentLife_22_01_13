@@ -35,6 +35,7 @@ import api from "@/api/api";
 import firstview from "@/components/userInfoView";
 import gameComp from "@/components/gameComp";
 import gameMask from "@/components/gameMask";
+import { Notify } from "vant";
 export default {
   name: "About",
   mounted() {
@@ -48,7 +49,9 @@ export default {
   setup() {
     // let store = useStore();
     const { proxy } = getCurrentInstance(); //this
-    onMounted(() => {});
+    onMounted(() => {
+      proxy.$store.dispatch("starytime");
+    });
 
     const fromConfig = reactive({
       isShowGif: true,
@@ -67,6 +70,9 @@ export default {
       fromConfig.isShowGif = true;
       fromConfig.isshowMask = true;
       getUserInfo();
+
+      proxy.$store.dispatch("stopTime");
+      proxy.$store.dispatch("starytime");
     };
     const clearMaski = () => {
       fromConfig.isshowMask = false;
@@ -85,40 +91,43 @@ export default {
         const res = await api.game.Rand(option);
 
         console.log("res", res);
-        const { code, data } = res;
+        const { code, data, msg } = res;
         if (code == 0) {
-          fromConfig.isShowGif = false;
-          fromConfig.numUrl = data.Url;
+          if (data) {
+            fromConfig.isShowGif = false;
+            fromConfig.numUrl = data.Url;
+            // require(`@/assets/game/dice/shaking${data.Dice}.gif`);
+            console.log("data", data);
+            // console.log("data.investment.length", data.investment.length);
+            // console.log("data.subject.length", data.subject.length);
+            if (data.investment.length == 0 && data.subject.length == 0) {
+              console.log("结算");
+              settlement(data.Event);
+            } else {
+              // console.log("不结算，弹框",data.investment.data[0]);
+              let val = null;
+              if (data.investment.length != 0) {
+                val = {
+                  type: 0,
+                  content: data.investment,
+                  title: data.investment.data[0],
+                };
+              } else if (data.subject.length != 0) {
+                val = {
+                  type: 1,
+                  content: data.subject,
+                };
+              }
 
-          // require(`@/assets/game/dice/shaking${data.Dice}.gif`);
-          console.log("data", data);
-          // console.log("data.investment.length", data.investment.length);
-          // console.log("data.subject.length", data.subject.length);
-          if (data.investment.length == 0 && data.subject.length == 0) {
-            console.log("结算");
-            settlement(data.Event);
-          } else {
-            // console.log("不结算，弹框",data.investment.data[0]);
-            let val = null;
-            if (data.investment.length != 0) {
-              val = {
-                type: 0,
-                content: data.investment,
-                title: data.investment.data[0],
-              };
-            } else if (data.subject.length != 0) {
-              val = {
-                type: 1,
-                content: data.subject,
-              };
+              proxy.$store.commit("SET_MASK_LIST", val);
             }
 
-            proxy.$store.commit("SET_MASK_LIST", val);
+            setTimeout(() => {
+              proxy.$refs.gameComp.luckDraw(data.Dice);
+            }, 3000);
+          } else {
+            Notify(msg);
           }
-
-          setTimeout(() => {
-            proxy.$refs.gameComp.luckDraw(data.Dice);
-          }, 3000);
         }
       } catch (err) {
         console.log("err", err);
@@ -171,8 +180,6 @@ export default {
         console.log("res", res);
         const { code, data } = res;
         if (code == 0) {
-
-          
           if (data.income) {
             let merge = parseFloat(data.income);
             data.income = merge;
