@@ -3,7 +3,7 @@
     <div class="index_first_info">
       <div class="first_info_box">
         <img class="info_box_img" src="@/assets/game/14.png" />
-        <div class="info_box_name">投资人</div>
+        <div class="info_box_name">{{ $store.state.userinfo.phone }}</div>
       </div>
       <div class="first_info_info">年龄 {{ $store.state.userinfo.age }}</div>
     </div>
@@ -20,11 +20,7 @@
         <img class="money_first_img" src="@/assets/game/05.png" />
         <div class="money_first_box">
           <div class="first_box_text">现金流</div>
-          <div class="first_box_money">
-            ￥{{
-              $store.state.userinfo.merge
-            }}万/月
-          </div>
+          <div class="first_box_money">￥{{ $store.state.userinfo.merge }}万/月</div>
         </div>
       </div>
       <div class="first_money_second">

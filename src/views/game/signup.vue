@@ -3,18 +3,18 @@
     <div class="signup_title">投资人生</div>
 
     <div class="signup_input">
-      <img class="signup_input_img" src="@/assets/game/10.png" />
+      <!-- <img class="signup_input_img" src="@/assets/game/10.png" /> -->
       <van-field
         class="signup_input_input"
-        :rules="[{ required: true, message: '请输入绑定的手机号' }]"
+        :rules="[{ required: true, message: '请输入id' }]"
         v-model="account.phone"
         label-width="42"
-        placeholder="请输入绑定的手机号"
-        label="手机号"
+        placeholder="请输入ID"
+        label="ID:"
       />
     </div>
 
-    <div class="signup_input">
+    <!-- <div class="signup_input">
       <img class="signup_input_img" src="@/assets/game/11.png" />
       <van-field
         class="signup_input_input"
@@ -27,10 +27,10 @@
         <template #button>
           <div v-if="codetimeout" class="signup_btn" @click="getcode">发送</div>
           <div v-if="!codetimeout" class="signup_btn">倒计时：{{ numtime }}</div>
-          <!-- <van-button size="small" type="primary">发送验证码</van-button> -->
+    
         </template>
       </van-field>
-    </div>
+    </div> -->
 
     <div class="signup_clause">
       <img v-if="isClause" class="signup_clause_img" src="@/assets/game/12.png" />
@@ -40,7 +40,7 @@
 
     <div class="signup_btnxx" @click="clickSignUp">
       <img class="signup_btn_img" src="@/assets/game/09.png" />
-      <div class="signup_btn_text">登录</div>
+      <div class="signup_btn_text">进入游戏</div>
     </div>
   </div>
 </template>
@@ -57,7 +57,7 @@ export default {
 
     const fromConfig = reactive({
       account: {
-        phone: "15251609976",
+        phone: "",
         code: "",
       },
       numtime: 1,
@@ -105,15 +105,16 @@ export default {
     };
 
     const clickSignUp = () => {
-      if (fromConfig.account.phone && fromConfig.account.code) {
-        let regPhong = /^1[3456789]\d{9}$/;
-        // return regPhong.test(value)
-        let isphone = regPhong.test(fromConfig.account.phone);
-        console.log("isphone", isphone);
+      if (fromConfig.account.phone) {
+        // let regPhong = /^1[3456789]\d{9}$/;
+        // // return regPhong.test(value)
+        // let isphone = regPhong.test(fromConfig.account.phone);
+        // console.log("isphone", isphone);
 
-        if (isphone) {
+        // if (isphone) {
+        
+        // }
           singnuptrue();
-        }
       } else {
         Notify("请输入全部信息");
       }
@@ -121,7 +122,7 @@ export default {
     const singnuptrue = async () => {
       try {
         let option = {
-          code: fromConfig.account.code,
+          // code: fromConfig.account.code,
           phone: fromConfig.account.phone,
         };
         console.log("option", option);
@@ -229,7 +230,8 @@ export default {
     overflow: hidden;
     background: #ffffff;
     .signup_input_input {
-      padding: 0;
+      // margin-left: 10px;
+      padding: 20px;
       margin-left: 3px;
       .van-field__control {
         width: 90px;

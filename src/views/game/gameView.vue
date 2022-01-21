@@ -1,6 +1,7 @@
 <template>
   <div class="game_index">
     <img class="game_index_bgimgx" src="@/assets/game/15.png" />
+    <img class="game_index_bgimgx" src="@/assets/game/28.gif" />
     <firstview></firstview>
     <gameComp ref="gameComp" @walkCallback="walkCallback"></gameComp>
     <!-- v-if="isshowMask" -->
