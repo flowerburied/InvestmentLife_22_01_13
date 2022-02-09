@@ -13,7 +13,7 @@
             v-for="(it, index) in $store.state.maskList.data"
             :key="index"
           >
-            {{ it.content[0] }}
+            {{ it.content[0] +'   投资金额'+ it.content.Investmentamount+'万'}}
           </div>
         </div>
       </div>

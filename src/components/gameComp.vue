@@ -7,7 +7,7 @@
       :style="{
         top: item.top + 'px',
         left: item.left + 'px',
-        transitionDuration: +'S',
+        transitionProperty: transitionDuration,
       }"
       :ref="'coordinate' + index"
     >
@@ -18,9 +18,51 @@
         :style="{
           top: itgroup.top + 'px',
           left: itgroup.left + 'px',
-          transitionDuration: '1S',
         }"
         :ref="'coordinate' + index + ingroup"
+        :src="itgroup.bg"
+      />
+    </div>
+
+    <div
+      class="canvas_box_fortestbao"
+      v-for="(item, indexx) in coordinateGroup"
+      :key="indexx"
+      :style="{
+        top: item.top - 368 + 'px',
+        left: item.left + 'px',
+        transitionProperty: transitionDuration,
+      }"
+    >
+      <img
+        v-for="(itgroup, ingroupxx) in item.group"
+        :key="ingroupxx"
+        class="canvas_box_fortest"
+        :style="{
+          top: itgroup.top + 'px',
+          left: itgroup.left + 'px',
+        }"
+        :src="itgroup.bg"
+      />
+    </div>
+    <div
+      class="canvas_box_fortestbao"
+      v-for="(item, indexx) in coordinateGroup"
+      :key="indexx"
+      :style="{
+        top: item.top + 368 + 'px',
+        left: item.left + 'px',
+        transitionProperty: transitionDuration,
+      }"
+    >
+      <img
+        v-for="(itgroup, ingroupxx) in item.group"
+        :key="ingroupxx"
+        class="canvas_box_fortest"
+        :style="{
+          top: itgroup.top + 'px',
+          left: itgroup.left + 'px',
+        }"
         :src="itgroup.bg"
       />
     </div>
@@ -34,7 +76,10 @@
 <script>
 import { reactive, toRefs, getCurrentInstance } from "vue";
 export default {
-  setup() {
+  emits: {
+    walkCallback: null,
+  },
+  setup(props, { emit }) {
     const { proxy } = getCurrentInstance(); //this
     const fromConfig = reactive({
       // 23  36
@@ -68,13 +113,45 @@ export default {
           ],
         },
       ],
+
+      coordinateGroupshow: [
+        {
+          top: 0,
+          left: 0,
+          group: [
+            { bg: require("@/assets/game/03.png"), top: 0, left: 0 },
+            { bg: require("@/assets/game/02.png"), top: 23, left: 36 },
+            { bg: require("@/assets/game/01.png"), top: 46, left: 72 },
+            { bg: require("@/assets/game/02.png"), top: 69, left: 108 },
+            { bg: require("@/assets/game/03.png"), top: 92, left: 144 },
+            { bg: require("@/assets/game/02.png"), top: 115, left: 108 },
+            { bg: require("@/assets/game/01.png"), top: 138, left: 72 },
+            { bg: require("@/assets/game/02.png"), top: 161, left: 36 },
+          ],
+        },
+        {
+          top: 184,
+          left: 0,
+          group: [
+            { bg: require("@/assets/game/03.png"), top: 0, left: 0 },
+            { bg: require("@/assets/game/02.png"), top: 23, left: 36 },
+            { bg: require("@/assets/game/01.png"), top: 46, left: 72 },
+            { bg: require("@/assets/game/02.png"), top: 69, left: 108 },
+            { bg: require("@/assets/game/03.png"), top: 92, left: 144 },
+            { bg: require("@/assets/game/02.png"), top: 115, left: 108 },
+            { bg: require("@/assets/game/01.png"), top: 138, left: 72 },
+            { bg: require("@/assets/game/02.png"), top: 161, left: 36 },
+          ],
+        },
+      ],
+
       gameBtn: null,
       clickView: [],
       presentCoor: {
         index: 1,
         ingroup: 7,
       },
-      transitionDuration: 1,
+      transitionDuration: "all",
       surplus: 0,
     });
 
@@ -96,7 +173,7 @@ export default {
               index: presentCoor.index,
               ingroup: presentCoor.ingroup - 1,
               refnum: presentCoor.index + "" + (presentCoor.ingroup - 1),
-              transitionDuration: 1,
+              transitionDuration: "all",
             };
             presentCoor.ingroup = presentCoor.ingroup - 1;
           } else {
@@ -104,7 +181,7 @@ export default {
               index: presentCoor.index - 1,
               ingroup: 7,
               refnum: presentCoor.index - 1 + "" + 7,
-              transitionDuration: 1,
+              transitionDuration: "all",
             };
             presentCoor.index = presentCoor.index - 1;
             presentCoor.ingroup = 7;
@@ -126,6 +203,7 @@ export default {
         fromConfig.presentCoor = newpresentCoor;
         recursion(getarray);
       } else {
+        fromConfig.transitionDuration = "none";
         let newpresentCoor = {
           index: 1,
           ingroup: 7,
@@ -137,7 +215,12 @@ export default {
     const recursion = (animateArray) => {
       console.log("animateArray", animateArray);
       if (animateArray.length != 0) {
-        fromConfig.transitionDuration = animateArray[0].transitionDuration;
+        if (animateArray[0].index == 1 && animateArray[0].ingroup == 7) {
+          fromConfig.transitionDuration = "none";
+        } else {
+          fromConfig.transitionDuration = animateArray[0].transitionDuration;
+        }
+
         testSrray(animateArray[0].refnum);
         animateArray.splice(0, 1);
         setTimeout(() => {
@@ -145,6 +228,7 @@ export default {
         }, 1000);
       } else {
         if (fromConfig.surplus) {
+          fromConfig.transitionDuration = "none";
           let newpresentCoor = {
             index: 1,
             ingroup: 7,
@@ -153,7 +237,7 @@ export default {
           resetFun();
         } else {
           // 结束
-          proxy.$emit("walkCallback");
+          emit("walkCallback");
         }
       }
     };
@@ -179,7 +263,7 @@ export default {
           luckDraw(onsurplus);
         } else {
           // 结束
-          proxy.$emit("walkCallback");
+          emit("walkCallback");
         }
         // if (onsurplus != 1 || onsurplus != 0) {
         //   luckDraw(onsurplus);

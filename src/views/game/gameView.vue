@@ -124,7 +124,7 @@ export default {
             }
 
             setTimeout(() => {
-              proxy.$refs.gameComp.luckDraw(data.Dice);
+              proxy.$refs.gameComp.luckDraw(5);
             }, 3000);
           } else {
             Notify(msg);

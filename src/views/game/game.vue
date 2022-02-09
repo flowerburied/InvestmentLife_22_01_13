@@ -292,6 +292,10 @@ export default {
         fromConfig.coordinateGroup[i].left =
           fromConfig.coordinateGroup[i].left + option.offsetLeft;
       }
+
+      let newarray = fromConfig.coordinateGroup;
+      // newarray.splice(2, 1);
+      fromConfig.coordinateGroup = newarray;
     };
 
     const testSrrayAdd = () => {
@@ -308,11 +312,65 @@ export default {
       fromConfig.coordinateGroup = initialPoint;
     };
     const showref = (index, ingroup) => {
-      console.log("index,ingroup", index, ingroup);
+      // console.log("index,ingroup", index, ingroup);
       // let videoPlayer = eval("this.$refs.micSvgaAnim" + i)[0];
       let numt = index + "" + ingroup + "";
       console.log("numt", numt);
-      testSrray(numt);
+      console.log("fromConfig.coordinateGroup", fromConfig.coordinateGroup);
+      let newarray = fromConfig.coordinateGroup;
+      if (ingroup == "0") {
+        console.log("newarray[index].top",newarray[index].top)
+        if (newarray[index].top == "550") {
+          let getadd = {
+            top: fromConfig.coordinateGroup[index].top - 160,
+            left: fromConfig.coordinateGroup[index].left,
+            group: [
+              { bg: "#db1919", top: 0, left: 0 },
+              { bg: "#f7d775", top: 20, left: 40 },
+              { bg: "#0000ff", top: 40, left: 80 },
+              { bg: "#f7d775", top: 60, left: 120 },
+              { bg: "#db1919", top: 80, left: 160 },
+              { bg: "#f7d775", top: 100, left: 120 },
+              { bg: "#0000ff", top: 120, left: 80 },
+              { bg: "#f7d775", top: 140, left: 40 },
+            ],
+          };
+          newarray.push(getadd);
+          console.log("newarray", newarray);
+          // newarray.splice(2,1)
+          fromConfig.coordinateGroup = newarray;
+          testSrray(numt);
+        } else {
+          testSrray(numt);
+        }
+      }else{
+         testSrray(numt);
+      }
+      // if (numt == "00") {
+      //   let getadd = {
+      //     top: fromConfig.coordinateGroup[0].top - 160,
+      //     left: fromConfig.coordinateGroup[0].left,
+      //     group: [
+      //       { bg: "#db1919", top: 0, left: 0 },
+      //       { bg: "#f7d775", top: 20, left: 40 },
+      //       { bg: "#0000ff", top: 40, left: 80 },
+      //       { bg: "#f7d775", top: 60, left: 120 },
+      //       { bg: "#db1919", top: 80, left: 160 },
+      //       { bg: "#f7d775", top: 100, left: 120 },
+      //       { bg: "#0000ff", top: 120, left: 80 },
+      //       { bg: "#f7d775", top: 140, left: 40 },
+      //     ],
+      //   };
+      //   newarray.push(getadd);
+      //   console.log("newarray", newarray);
+      //   // newarray.splice(2,1)
+      //   fromConfig.coordinateGroup = newarray;
+      //   setTimeout(() => {
+      //     testSrray(numt);
+      //   }, 2000);
+      // } else {
+      //   testSrray(numt);
+      // }
     };
 
     // const coordinate = (el) => {
