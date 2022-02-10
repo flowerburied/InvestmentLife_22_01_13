@@ -1,7 +1,7 @@
 <template>
   <div class="game_index">
-    <img class="game_index_bgimgx" src="@/assets/game/15.png" />
-    <img class="game_index_bgimgx" src="@/assets/game/28.gif" />
+    <!-- <img class="game_index_bgimgx" src="@/assets/game/15.png" /> -->
+    <!-- <img class="game_index_bgimgx" src="@/assets/game/28.gif" /> -->
     <firstview></firstview>
     <gameComp ref="gameComp" @walkCallback="walkCallback"></gameComp>
     <!-- v-if="isshowMask" -->
@@ -11,6 +11,7 @@
       @clearMaski="clearMaski"
     ></gameMask>
 
+    <!-- 筛子 -->
     <div class="index_bottom">
       <img
         v-if="isShowGif"
@@ -33,7 +34,8 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { qrcanvas } from "qrcanvas";
 import api from "@/api/api";
-import firstview from "@/components/userInfoView";
+// import firstview from "@/components/userInfoView";
+import firstview from "@/components/newuserInfo";
 import gameComp from "@/components/gameComp";
 import gameMask from "@/components/gameMask";
 import { Notify } from "vant";
@@ -124,7 +126,7 @@ export default {
             }
 
             setTimeout(() => {
-              proxy.$refs.gameComp.luckDraw(5);
+              proxy.$refs.gameComp.luckDraw(data.Dice);
             }, 3000);
           } else {
             Notify(msg);
@@ -210,6 +212,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+  background: #FDE4C5;
   .game_index_bgimgx {
     z-index: -1;
     position: fixed;
@@ -217,9 +220,9 @@ export default {
     height: 100vh;
   }
   .index_bottom {
-    z-index: 999;
+    z-index: 1005;
     position: fixed;
-    bottom: 0;
+    bottom: 165px;
     width: 100%;
     height: 110px;
 

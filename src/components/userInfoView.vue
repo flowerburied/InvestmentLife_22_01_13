@@ -49,9 +49,9 @@ export default {};
 
 <style lang="scss">
 .index_first {
-  z-index: 1001;
+  z-index: 1011;
   position: fixed;
-  top: 0;
+  bottom: 0;
   width: 100%;
   height: 110px;
   background: linear-gradient(-90deg, #ff9948, #ffbd2e);

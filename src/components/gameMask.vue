@@ -258,7 +258,7 @@ export default {
 
 <style lang="scss">
 .game_mask {
-  z-index: 1001;
+  z-index: 1010;
   position: fixed;
   top: 0;
   width: 100%;
@@ -534,7 +534,7 @@ export default {
           position: absolute;
           width: 66px;
           height: 12px;
-          background: #c3e3f6;
+          background: #FFE8C0;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -549,7 +549,7 @@ export default {
           top: 5px;
           width: 99px;
           height: 39px;
-          background: #c3e3f6;
+          background: #FFE8C0;
           border: 1px solid #2b68d9;
           border-radius: 5px;
           display: flex;

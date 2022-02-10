@@ -1,25 +1,61 @@
 <template>
   <div class="index_game">
+    <img
+      class="canvas_box_firstimg"
+      :style="{
+        top: coordinateGroup[0].top - 732 + 'px',
+        left: coordinateGroup[0].left - 150 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/32.png"
+    />
+
+    <img
+      class="canvas_box_secimg"
+      :style="{
+        top: coordinateGroup[0].top - 686 + 'px',
+        left: coordinateGroup[0].left + 150 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/31.png"
+    />
+    <img
+      class="canvas_box_thirdimg"
+      :style="{
+        top: coordinateGroup[0].top - 516 + 'px',
+        left: coordinateGroup[0].left - 70 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/30.png"
+    />
+    <img
+      class="canvas_box_fourimg"
+      :style="{
+        top: coordinateGroup[0].top - 436 + 'px',
+        left: coordinateGroup[0].left + 120 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/29.png"
+    />
+
     <div
       class="canvas_box_fortestbao"
-      v-for="(item, index) in coordinateGroup"
-      :key="index"
+      v-for="(item, indexx) in coordinateGroup"
+      :key="indexx"
       :style="{
-        top: item.top + 'px',
+        top: item.top - 736 + 'px',
         left: item.left + 'px',
         transitionProperty: transitionDuration,
       }"
-      :ref="'coordinate' + index"
     >
       <img
-        v-for="(itgroup, ingroup) in item.group"
-        :key="ingroup"
+        v-for="(itgroup, ingroupxx) in item.group"
+        :key="ingroupxx"
         class="canvas_box_fortest"
         :style="{
           top: itgroup.top + 'px',
           left: itgroup.left + 'px',
         }"
-        :ref="'coordinate' + index + ingroup"
         :src="itgroup.bg"
       />
     </div>
@@ -45,6 +81,144 @@
         :src="itgroup.bg"
       />
     </div>
+
+    <img
+      class="canvas_box_firstimg"
+      :style="{
+        top: coordinateGroup[0].top + 4 + 'px',
+        left: coordinateGroup[0].left - 150 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/32.png"
+    />
+
+    <img
+      class="canvas_box_secimg"
+      :style="{
+        top: coordinateGroup[0].top + 50 + 'px',
+        left: coordinateGroup[0].left + 150 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/31.png"
+    />
+    <img
+      class="canvas_box_thirdimg"
+      :style="{
+        top: coordinateGroup[0].top + 220 + 'px',
+        left: coordinateGroup[0].left - 70 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/30.png"
+    />
+    <img
+      class="canvas_box_fourimg"
+      :style="{
+        top: coordinateGroup[0].top + 300 + 'px',
+        left: coordinateGroup[0].left + 120 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/29.png"
+    />
+
+    <div
+      class="canvas_box_fortestbao"
+      v-for="(item, index) in coordinateGroup"
+      :key="index"
+      :style="{
+        top: item.top + 'px',
+        left: item.left + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      :ref="'coordinate' + index"
+    >
+      <img
+        v-for="(itgroup, ingroup) in item.group"
+        :key="ingroup"
+        class="canvas_box_fortest"
+        :style="{
+          top: itgroup.top + 'px',
+          left: itgroup.left + 'px',
+        }"
+        :ref="'coordinate' + index + ingroup"
+        :src="itgroup.bg"
+      />
+    </div>
+    <img
+      class="canvas_box_firstimg"
+      :style="{
+        top: coordinateGroup[0].top - 364 + 'px',
+        left: coordinateGroup[0].left - 150 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/32.png"
+    />
+
+    <img
+      class="canvas_box_secimg"
+      :style="{
+        top: coordinateGroup[0].top - 318 + 'px',
+        left: coordinateGroup[0].left + 150 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/31.png"
+    />
+    <img
+      class="canvas_box_thirdimg"
+      :style="{
+        top: coordinateGroup[0].top - 148 + 'px',
+        left: coordinateGroup[0].left - 70 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/30.png"
+    />
+    <img
+      class="canvas_box_fourimg"
+      :style="{
+        top: coordinateGroup[0].top - 68 + 'px',
+        left: coordinateGroup[0].left + 120 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/29.png"
+    />
+
+    <img
+      class="canvas_box_firstimg"
+      :style="{
+        top: coordinateGroup[0].top + 372 + 'px',
+        left: coordinateGroup[0].left - 150 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/32.png"
+    />
+
+    <img
+      class="canvas_box_secimg"
+      :style="{
+        top: coordinateGroup[0].top + 418 + 'px',
+        left: coordinateGroup[0].left + 150 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/31.png"
+    />
+    <img
+      class="canvas_box_thirdimg"
+      :style="{
+        top: coordinateGroup[0].top + 588 + 'px',
+        left: coordinateGroup[0].left - 70 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/30.png"
+    />
+    <img
+      class="canvas_box_fourimg"
+      :style="{
+        top: coordinateGroup[0].top + 668 + 'px',
+        left: coordinateGroup[0].left + 120 + 'px',
+        transitionProperty: transitionDuration,
+      }"
+      src="@/assets/game/29.png"
+    />
+
     <div
       class="canvas_box_fortestbao"
       v-for="(item, indexx) in coordinateGroup"
@@ -67,7 +241,7 @@
       />
     </div>
   </div>
-
+  <!-- 小人 -->
   <div class="game_character" ref="gameBtn">
     <img class="game_character_img" src="@/assets/game/26.png" />
   </div>
@@ -324,6 +498,7 @@ export default {
 
 <style lang="scss">
 .game_character {
+  z-index: 1003;
   margin-right: 96px;
   position: relative;
   top: 495px;
@@ -346,6 +521,38 @@ export default {
   width: 240px;
   top: 150px;
   // background: rgb(192, 198, 255);
+  .canvas_box_firstimg {
+    z-index: 1002;
+    position: absolute;
+    width: 220px;
+    height: 163px;
+    transition-property: all; //过度动画
+    transition-duration: 1s;
+  }
+  .canvas_box_secimg {
+    z-index: 1002;
+    position: absolute;
+    width: 150px;
+    height: 229px;
+    transition-property: all; //过度动画
+    transition-duration: 1s;
+  }
+  .canvas_box_thirdimg {
+    z-index: 1002;
+    position: absolute;
+    width: 114px;
+    height: 158px;
+    transition-property: all; //过度动画
+    transition-duration: 1s;
+  }
+  .canvas_box_fourimg {
+    z-index: 1002;
+    position: absolute;
+    width: 182px;
+    height: 145px;
+    transition-property: all; //过度动画
+    transition-duration: 1s;
+  }
 
   .canvas_box_fortestbao {
     position: absolute;
