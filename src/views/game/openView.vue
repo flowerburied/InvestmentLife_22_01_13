@@ -21,7 +21,6 @@ export default {
   setup() {
     // let store = useStore();
     // const { proxy } = getCurrentInstance(); //this
-  
 
     const fromConfig = reactive({});
 
@@ -29,8 +28,6 @@ export default {
     const gotusignup = () => {
       router.push("/signup");
     };
-
-
 
     return { ...toRefs(fromConfig), gotusignup };
   },
@@ -57,6 +54,7 @@ export default {
     line-height: 16px;
   }
   .open_view_bottom {
+    z-index: 1010;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -69,7 +67,8 @@ export default {
       height: 334px;
     }
     .view_bottom_btn {
-      margin-top: 210px;
+      z-index: 1111;
+      // margin-top: 210px;
       position: absolute;
       width: 178px;
       height: 46px;
