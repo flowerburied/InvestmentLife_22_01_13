@@ -52,16 +52,32 @@ export default {
   setup() {
     // let store = useStore();
     const { proxy } = getCurrentInstance(); //this
+    const router = useRouter();
     onMounted(() => {
-      proxy.$store.dispatch("starytime");
+      starttime();
+      // proxy.$store.dispatch("starytime");
     });
 
     const fromConfig = reactive({
       isShowGif: true,
       numUrl: require("@/assets/game/dice/shaking1.gif"),
-
       isshowMask: false,
+      setTimeparam: null,
     });
+
+    const starttime = () => {
+      fromConfig.setTimeparam = setTimeout(() => {
+        console.log("router", router);
+        router.push("/");
+      }, 300000);
+  
+    };
+
+    const cleartime = () => {
+      console.log("fromConfig.setTimeparam", fromConfig.setTimeparam);
+      clearTimeout(fromConfig.setTimeparam);
+      fromConfig.setTimeparam = null;
+    };
 
     // const router = useRouter();
     // const toabout = () => {
@@ -73,9 +89,12 @@ export default {
       fromConfig.isShowGif = true;
       fromConfig.isshowMask = true;
       getUserInfo();
-
-      proxy.$store.dispatch("stopTime");
-      proxy.$store.dispatch("starytime");
+      // console.log(" proxy.$store.", proxy.$store.state.timeout);
+      // clearTimeout(state.timeout)
+      // proxy.$store.dispatch("stopTime");
+      // proxy.$store.dispatch("starytime");
+      cleartime();
+      starttime();
     };
     const clearMaski = () => {
       fromConfig.isshowMask = false;
@@ -187,7 +206,7 @@ export default {
             let merge = parseFloat(data.income);
             data.income = merge;
 
-            data.merge = merge + data.income;
+            data.merge = merge + data.wages / 10000;
           } else {
             data.merge = 0;
             data.income = 0;
@@ -212,7 +231,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background: #FDE4C5;
+  background: #fde4c5;
   .game_index_bgimgx {
     z-index: -1;
     position: fixed;

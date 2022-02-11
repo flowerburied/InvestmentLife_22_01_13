@@ -135,7 +135,7 @@ export default {
             let merge = parseFloat(data.income);
             data.income = merge;
 
-            data.merge = merge + data.income;
+            data.merge = merge + data.wages/10000;
           } else {
             data.merge = 0;
             data.income = 0;
@@ -150,6 +150,8 @@ export default {
           router.push({
             path: "/gameView",
           });
+        }else{
+           Notify("ID已被占用");
         }
       } catch (err) {
         console.log("err", err);

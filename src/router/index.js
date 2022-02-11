@@ -5,9 +5,9 @@ const routes = [
 
     {
         path: "/",
-        name: "game",
+        name: "openView",
         component: () =>
-            import ("@/views/game/game.vue"),
+            import ("@/views/game/openView.vue"),
     },
     {
         path: "/gameView",
@@ -15,12 +15,12 @@ const routes = [
         component: () =>
             import ("@/views/game/gameView.vue"),
     },
-    {
-        path: "/openView",
-        name: "openView",
-        component: () =>
-            import ("@/views/game/openView.vue"),
-    },
+    // {
+    //     path: "/openView",
+    //     name: "openView",
+    //     component: () =>
+    //         import ("@/views/game/openView.vue"),
+    // },
     {
         path: "/signup",
         name: "signup",

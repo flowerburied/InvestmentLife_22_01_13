@@ -37,6 +37,7 @@ export default createStore({
             commit('SET_TIME_OUT', param)
         },
         stopTime({ commit, state }) {
+            console.log("state.timeout", state.timeout)
             clearTimeout(state.timeout)
             let param = null
             commit('SET_TIME_OUT', param)

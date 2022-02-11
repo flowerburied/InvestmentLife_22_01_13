@@ -7,12 +7,12 @@
       <div class="newinfo_box_money">
         <div class="box_money_box box_left">
           <img class="money_box_img" src="@/assets/game/34.png" />
-          <div class="money_box_text">现金：{{ $store.state.userinfo.money }}万</div>
+          <div class="money_box_text">现金:{{ $store.state.userinfo.money }}万</div>
         </div>
 
         <div class="box_money_box box_right">
           <img class="money_box_img" src="@/assets/game/34.png" />
-          <div class="money_box_text">现金流：{{ $store.state.userinfo.merge }}万/月</div>
+          <div class="money_box_text">现金流:{{ $store.state.userinfo.merge }}万/月</div>
         </div>
       </div>
 
