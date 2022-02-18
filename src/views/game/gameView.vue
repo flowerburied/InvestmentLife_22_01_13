@@ -1,6 +1,5 @@
 <template>
   <div class="game_index">
-    <!-- <img class="game_index_bgimgx" src="@/assets/game/15.png" /> -->
     <!-- <img class="game_index_bgimgx" src="@/assets/game/28.gif" /> -->
     <firstview></firstview>
     <gameComp ref="gameComp" @walkCallback="walkCallback"></gameComp>
@@ -10,7 +9,11 @@
       @getUserInfo="getUserInfo"
       @clearMaski="clearMaski"
     ></gameMask>
+    <img @click="isshowbox" class="game_index_addimg" src="@/assets/game/37.png" />
 
+    <div class="game_index_addbox" @click="isshowbox" v-if="addshow">
+      <img class="index_addimg_img" src="@/assets/game/38.png" />
+    </div>
     <!-- 筛子 -->
     <div class="index_bottom">
       <img
@@ -63,6 +66,8 @@ export default {
       numUrl: require("@/assets/game/dice/shaking1.gif"),
       isshowMask: false,
       setTimeparam: null,
+
+      addshow: true,
     });
 
     const starttime = () => {
@@ -70,7 +75,6 @@ export default {
         console.log("router", router);
         router.push("/");
       }, 300000);
-  
     };
 
     const cleartime = () => {
@@ -192,6 +196,9 @@ export default {
       }
     };
 
+    const isshowbox = () => {
+      fromConfig.addshow = !fromConfig.addshow;
+    };
     const getUserInfo = async () => {
       try {
         let option = {
@@ -204,9 +211,9 @@ export default {
         if (code == 0) {
           if (data.income) {
             let merge = parseFloat(data.income);
-            data.income = merge;
-
-            data.merge = merge + data.wages / 10000;
+            data.income = merge.toFixed(2);
+            let getmerge = merge + data.wages / 10000;
+            data.merge = getmerge.toFixed(2);
           } else {
             data.merge = 0;
             data.income = 0;
@@ -219,7 +226,14 @@ export default {
       }
     };
 
-    return { ...toRefs(fromConfig), drawNum, walkCallback, clearMaski, getUserInfo };
+    return {
+      ...toRefs(fromConfig),
+      drawNum,
+      walkCallback,
+      clearMaski,
+      getUserInfo,
+      isshowbox,
+    };
   },
 };
 </script>
@@ -237,6 +251,28 @@ export default {
     position: fixed;
     width: 100%;
     height: 100vh;
+  }
+  .game_index_addbox {
+    z-index: 1005;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .index_addimg_img {
+      width: 298px;
+      height: 567px;
+    }
+  }
+  .game_index_addimg {
+    z-index: 1005;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 35px;
+    height: 35px;
   }
   .index_bottom {
     z-index: 1005;

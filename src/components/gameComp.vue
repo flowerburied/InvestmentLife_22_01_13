@@ -498,10 +498,12 @@ export default {
 
 <style lang="scss">
 .game_character {
-  z-index: 1003;
+  z-index: 100;
   margin-right: 96px;
   position: relative;
-  top: 495px;
+  // top: 495px;
+  top: 345px;
+  // bottom: 200px;
 
   width: 72px;
   height: 46px;
@@ -519,7 +521,8 @@ export default {
 .index_game {
   position: relative;
   width: 240px;
-  top: 150px;
+  // top: 150px;
+  top: 0;
   // background: rgb(192, 198, 255);
   .canvas_box_firstimg {
     z-index: 1002;

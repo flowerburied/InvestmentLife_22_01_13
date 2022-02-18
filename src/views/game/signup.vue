@@ -80,15 +80,13 @@ export default {
         console.log("TencentSendSms", res);
         const { code, data } = res;
         if (code == 0) {
-    
-            fromConfig.numtime = 60;
-            fromConfig.codetimeout = false;
-            setTimeout(() => {
-              fromConfig.codetimeout = true;
-            }, 3000);
-            getTime();
-            console.log("data", data);
-          
+          fromConfig.numtime = 60;
+          fromConfig.codetimeout = false;
+          setTimeout(() => {
+            fromConfig.codetimeout = true;
+          }, 3000);
+          getTime();
+          console.log("data", data);
         }
       } catch (err) {
         console.log("err", err);
@@ -112,9 +110,9 @@ export default {
         // console.log("isphone", isphone);
 
         // if (isphone) {
-        
+
         // }
-          singnuptrue();
+        singnuptrue();
       } else {
         Notify("请输入全部信息");
       }
@@ -133,9 +131,9 @@ export default {
         if (code == 0) {
           if (data.income) {
             let merge = parseFloat(data.income);
-            data.income = merge;
-
-            data.merge = merge + data.wages/10000;
+            data.income = merge.toFixed(2);
+            let getmerge = merge + data.wages / 10000;
+            data.merge = getmerge.toFixed(2);
           } else {
             data.merge = 0;
             data.income = 0;
@@ -150,8 +148,8 @@ export default {
           router.push({
             path: "/gameView",
           });
-        }else{
-           Notify("ID已被占用");
+        } else {
+          Notify("ID已被占用");
         }
       } catch (err) {
         console.log("err", err);
